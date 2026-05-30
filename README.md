@@ -83,42 +83,6 @@ This opens **http://localhost:3000** in your browser automatically.
 Email:    admin@postcraft.io
 Password: Admin@123
 ```
-
----
-
-## ⚠️ Important: Storage Note
-
-This app uses `window.storage` — a special API available inside **Claude Artifacts** (claude.ai).
-
-**When running locally**, you need to add a `localStorage` polyfill. Add this snippet to the top of `src/store/storage.js`:
-
-```js
-// Polyfill window.storage for local development
-if (!window.storage) {
-  window.storage = {
-    _data: {},
-    async get(key) {
-      const value = localStorage.getItem(key);
-      return value ? { key, value } : null;
-    },
-    async set(key, value) {
-      localStorage.setItem(key, value);
-      return { key, value };
-    },
-    async delete(key) {
-      localStorage.removeItem(key);
-      return { key, deleted: true };
-    },
-    async list(prefix) {
-      const keys = Object.keys(localStorage).filter(k => !prefix || k.startsWith(prefix));
-      return { keys };
-    },
-  };
-}
-```
-
-Place it **before** the `const Storage = { ... }` block.
-
 ---
 
 ## Build for Production
@@ -130,11 +94,3 @@ npm run build
 Output goes to the `build/` folder. You can deploy it to any static host (Netlify, Vercel, GitHub Pages, etc.).
 
 ---
-
-## Default Admin Account
-
-On first launch, the app auto-creates an admin:
-- **Email:** admin@postcraft.io  
-- **Password:** Admin@123
-
-You can create more users from **Settings → User Management** (admin only).
