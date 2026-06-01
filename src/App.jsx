@@ -45,4 +45,12 @@ function AppShell() {
   );
 }
 
-
+export default function App() {
+  return (
+    <AuthProvider>
+      <PostsProvider>
+        <AppShell />
+      </PostsProvider>
+    </AuthProvider>
+  );
+}
